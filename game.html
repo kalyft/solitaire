@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game</title>
+    <meta charset="utf-8">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<script>
+var ds=[];
+var cs=[];
+var hs=[];
+var ss=[];
+var opencurrent;
+
+function candrop(x) {
+  return function(y) {
+    if(y==null && x.prototype.number==13){
+      return true;
+    }
+    else{
+      if(y!=null && x.__proto__ == y.__proto__ && x.prototype.number+1 == y.prototype.number){
+	return true;
+      }else{
+	return false;
+      }
+    }
+  };
+}
+
+
+function card(number, name)
+{
+this.number=number;
+this.name=name;
+this.photo="<img src=\""+this.number+this.name+".gif\"  id= \""+this.number+this.name+"\" alt=\"card\" height=\"42\" width=\"42\">" ;//<div id =\"img\""+this.number+this.name+"></div>
+}
+
+function d(x){
+this.prototype = new card(x, "d");
+this.canBeDroppedOn = candrop(this);
+}
+
+
+function c(x){
+this.prototype = new card(x, "c");
+this.canBeDroppedOn = candrop(this);
+}
+
+function h(x){
+this.prototype = new card(x, "h");
+this.canBeDroppedOn = candrop(this);
+}
+
+function s(x){
+this.prototype = new card(x, "s");
+this.canBeDroppedOn = candrop(this);
+}
+
+var cards = new Array();
+
+_.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], function(num){ 
+								var fred=new d(num);
+								cards[num-1] = fred; });
+													
+_.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], function(num){ 
+								var fred=new c(num);
+								cards[num+12] = fred; });
+														
+_.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], function(num){ 
+								var fred=new h(num);
+								cards[num+25] = fred; });
+														
+_.each([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], function(num){ 
+								var fred=new s(num);
+								cards[num+38] = fred; });
+
+var cards = _.shuffle(cards);
+for (var i in cards) {
+  document.write(cards[i].prototype.photo);
+}
+
+var opencards = new Array();
+
+$("#closed").click(function () {
+	var current = _.first(cards);
+	opencards[0]=current;
+	$('#open').html(current.prototype.photo);
+});
+</script>
+<div id="closed"><img src="closed.gif" alt="card" height="42" width="42"></div>
+<div id="open" class="draggable"></div>
+<div class="righty">
+
+  <br class="clear-both">
+
+  <ul id="sortabled" class="sortable">
+
+  </ul>
+
+  <ul id="sortablec" class="sortable">
+
+  </ul>
+
+  <ul id="sortableh" class="sortable">
+
+  </ul>
+
+  <ul id="sortables" class="sortable">
+
+  </ul>
+</div>
+Με κάθε click στο κλειστό χαρτί της τράπουλας εμφανίζεται και ένα χαρτί. Σκοπός του παιχνιδιού είναι να μπουν όλα τα χαρτιά της τράπουλας στα τέσσερα κόκκινα πλαίσια με τη σειρά (Κ εώς Α) βάση του χρώματός τους.
+Για να τοποθετηθεί το ανοιχτό χαρτί σε κάποιο από τα 4 πλαίσια πρέπει ο παίκτης να κάνει click στο πλαίσιο αυτό.
+<script>
+$("#closed").click(function () {
+	if(cards.length > 0){
+		var current = _.first(cards);
+		opencards[opencards.length]=current;
+		cards.splice(0, 1);
+		$('#open').html(current.prototype.photo);
+	}
+	else{
+		$('#open').html("");
+		cards = opencards;
+		opencards = [];
+	}
+});
+</script>
+<script>
+$("#sortabled").click(function () {
+	opencurrent = _.last(opencards);
+	
+	if(opencurrent!=null && opencurrent.canBeDroppedOn(_.last(ds))){
+		
+		ds[ds.length]=opencurrent;
+		opencards.splice(opencards.length-1, 1);
+		if(opencards.length>0){
+                     $('#open').html(_.last(opencards).prototype.photo);
+                }
+                else{
+                     $('#open').html("");
+                }
+		$('#sortabled').append("<li>"+opencurrent.prototype.photo+"</li>");
+	}
+	else{
+		alert("Μη επιτρεπτή ενέργεια");
+	}
+});
+</script>
+<script>
+$("#sortablec").click(function () {
+	opencurrent = _.last(opencards);
+	
+	if(opencurrent!=null && opencurrent.canBeDroppedOn(_.last(cs))){
+		
+		cs[cs.length]=opencurrent;
+		opencards.splice(opencards.length-1, 1);
+		if(opencards.length>0){
+                     $('#open').html(_.last(opencards).prototype.photo);
+                }
+                else{
+                     $('#open').html("");
+                }
+		$('#sortablec').append("<li>"+opencurrent.prototype.photo+"</li>");
+	}
+	else{
+		alert("Μη επιτρεπτή ενέργεια");
+	}
+});
+</script>
+<script>
+$("#sortableh").click(function () {
+	opencurrent = _.last(opencards);
+	
+	if(opencurrent!=null && opencurrent.canBeDroppedOn(_.last(hs))){
+		
+		hs[hs.length]=opencurrent;
+		opencards.splice(opencards.length-1, 1);
+		if(opencards.length>0){
+                     $('#open').html(_.last(opencards).prototype.photo);
+                }
+                else{
+                     $('#open').html("");
+                }
+		$('#sortableh').append("<li>"+opencurrent.prototype.photo+"</li>");
+	}
+	else{
+		alert("Μη επιτρεπτή ενέργεια");
+	}
+});
+</script>
+<script>
+$("#sortables").click(function () {
+	opencurrent = _.last(opencards);
+	
+	if(opencurrent!=null && opencurrent.canBeDroppedOn(_.last(ss))){
+		
+		ss[ss.length]=opencurrent;
+		opencards.splice(opencards.length-1, 1);
+		if(opencards.length>0){
+                     $('#open').html(_.last(opencards).prototype.photo);
+                }
+                else{
+                     $('#open').html("");
+                }
+		$('#sortables').append("<li>"+opencurrent.prototype.photo+"</li>");
+	}
+	else{
+		alert("Μη επιτρεπτή ενέργεια");
+	}
+});
+</script>
+</body>
+</html>

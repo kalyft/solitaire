@@ -1,0 +1,98 @@
+.righty {
+
+    float: left;
+
+    width: 1000px;
+
+    height: 800px;
+
+    overflow: auto;
+
+}
+
+
+.img-float {
+
+    float: right;
+
+}
+
+.clear-both {
+
+    clear:both;
+
+}
+
+.droppable {
+
+    float: left;
+
+    width: 150px;
+
+    height: 150px;
+
+    padding: 0.5em;
+
+    float: left;
+
+}
+
+.draggable {
+
+    width: 42px;
+
+    height: 42px;
+
+    padding: 0.5em;
+
+    cursor: pointer;
+
+    border: 1px solid #000;
+
+}
+
+.sortable {
+
+    float: left;
+
+    width: 150px;
+
+    min-height: 50px;
+
+    padding: 0.5em;
+
+    float: left;
+
+    margin: 0px 10px 8px 20px;
+
+    cursor: pointer;
+
+    border: 1px dotted red;
+
+}
+
+ul {
+
+    list-style-type: none;
+
+    margin: 0;
+
+    padding: 0;
+
+    margin-bottom: 10px;
+
+    
+
+}
+
+li {
+
+    margin: 5px;
+
+    padding: 5px;
+
+    width: 150px;
+
+    height: 45px;
+
+}
